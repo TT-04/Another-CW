@@ -1,0 +1,67 @@
+global  _start						
+
+N equ 1								
+							
+code_zero equ 48				
+
+section .bss					
+var_read:	resd N					
+var_write:	resd N					
+								
+
+section .text					
+_start:								
+	call asm_read_decimal			
+									
+	call asm_write_decimal			
+	call asm_exit					
+
+asm_read_decimal:					
+	call asm_read					
+	xor rax, rax				
+									
+		xor rbx, rbx				
+		mov bl, [var_read]	 
+							     	
+		sub bl, code_zero			
+		add rax, rbx				
+		ret							
+
+asm_write_decimal:					
+
+	
+		xor rdx, rdx													
+	
+	
+	
+		add rax, code_zero			
+		
+								
+		mov [var_write], al	
+		
+									
+	call asm_write					
+	ret									
+
+asm_read:					
+	mov rax, 0					
+	mov rdi, 0					 
+								
+	mov rsi, var_read		
+	mov rdx, N					
+	syscall					
+	ret							
+	
+asm_write:						
+	mov rax, 1					
+	mov rdi, 1				
+	mov rsi, var_write			
+	mov rdx, N					
+	syscall						
+	ret
+
+asm_exit:						
+	mov rax, 60					
+	xor rdi, rdi					
+	syscall
+	ret
