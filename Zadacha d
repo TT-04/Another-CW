@@ -1,0 +1,25 @@
+global  _start 
+ 
+code_zero equ 48		
+N equ 4
+ 
+section .data
+x dw N
+ 
+section .bss
+per: resd 1
+ 
+section .text
+_start:
+mov eax, 2
+mov ebx, 3
+mov ecx, x
+ 
+imul ebx, N
+add rax, rbx
+mov rbx, rax
+
+exit:
+mov rax, 60
+xor rdi, rdi
+syscall
